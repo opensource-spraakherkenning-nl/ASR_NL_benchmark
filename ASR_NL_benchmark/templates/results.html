@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+    <title> Results </title>
+
+    <style>
+    table {text-align: right;}
+    table thead th {text-align: right;}
+    </style>
+</head>
+
+
+
+
+<body>
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="select folders" href="#">Select folders</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#"> Analyse results</a>
+      </li>
+    </ul>
+
+
+        {% for galaxy,description in dfs.items() %}
+    <h2> Spraakherkenner: {{description.cat.kind}}</h2>
+    <h3> Gemiddelde WER: {{description.cat.wer}} </h3>
+        {% for key, value in description.items() %}
+    <div class="container" width="80%">
+    </div>
+        <h4> {{value.agregation}}</h4>
+            {{value.df.to_html(classes="table table-hover table-dark")|safe}}
+    </div>
+
+         {% endfor %}
+    {% endfor %}
+
+</body>
+</html>

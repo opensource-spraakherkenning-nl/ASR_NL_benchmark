@@ -1,0 +1,11 @@
+chardet==3.0.4
+DateTime==4.3
+Flask==1.1.4
+great_expectations==0.12.3
+Jinja2==2.11.2
+num2words==0.5.10
+markupsafe==2.0.1
+pandas==1.1.2
+
+
+
