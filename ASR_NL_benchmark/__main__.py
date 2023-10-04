@@ -29,7 +29,7 @@ if __name__ == "__main__":
         interface.main()
     else:
         print('Running benchmarking')
-        benchmarking = pipeline.Pipeline(args.hypfile[0], args.hypfile[1], args.reffile[0], args.reffile[1], kind=kind)
+        benchmarking = pipeline.Pipeline(args.hypfile[0], args.hypfile[1], args.reffile[0], args.reffile[1], kind=args.kind)
         benchmarking.main()
         pipeline.process_results(kind=args.kind)
 
