@@ -13,6 +13,10 @@ if __name__ == "__main__":
                         metavar=('reffile_name', 'extension'),
                         default=['ASR_NL_benchmark/data/test_ref.stm', 'stm'],
                         help='help: path to the reference file and its extension')
+    parser.add_argument('-kind', '--kind',
+                        metavar=('speechrecognizer'),
+                        default='',
+                        help='help: enter the name of your speech recognizer')
     parser.add_argument('-interactive',
                         metavar='value',
                         default='',
@@ -27,5 +31,5 @@ if __name__ == "__main__":
         print('Running benchmarking')
         benchmarking = pipeline.Pipeline(args.hypfile[0], args.hypfile[1], args.reffile[0], args.reffile[1])
         benchmarking.main()
-        pipeline.process_results()
+        pipeline.process_results(kind=args.kind)
 
