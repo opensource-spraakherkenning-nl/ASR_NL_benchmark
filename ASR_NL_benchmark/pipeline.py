@@ -98,7 +98,7 @@ def calculate_wer_per_cat(df,category='category', id='', kind=False):
     1   banaan          2  0.40  False
 
     """
-    df_out = df.groupby('category', as_index=False).agg({'ref_words': 'sum', 'product': 'sum'})
+    df_out = df.groupby(category, as_index=False).agg({'ref_words': 'sum', 'product': 'sum'})
     df_out['WER'] = (df_out['product'] / df_out['ref_words']).round(2)
     df_out = df_out.drop('product', 1)
     df_out['kind'] = kind
