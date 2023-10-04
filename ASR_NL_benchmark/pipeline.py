@@ -210,13 +210,14 @@ def process_input(hypfile_arg, reffile_arg):
 
 
 class Pipeline():
-    def __init__(self, hypfile_input_path, hypextension, reffile_input_path, refextension):
+    def __init__(self, hypfile_input_path, hypextension, reffile_input_path, refextension, kind):
         self.progress = 0
         self.failed = 0
         self.hypfile_input_path = hypfile_input_path
         self.reffile_input_path = reffile_input_path
         self.hypextension = hypextension
         self.refextension = refextension
+        self.kind = kind
         self.logging = set_logging(logpath=os.path.join(os.path.sep,'input',f'{date.today()}_logging.log'))
 
     def main(self):
@@ -238,7 +239,7 @@ class Pipeline():
                 done +=1
                 self.progress = done/total
                 self.failed += 1
-        process_results(path_parts=('input','results'), kind=False)
+        process_results(path_parts=('input','results'), kind=self.kind)
 
 
 
