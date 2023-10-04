@@ -62,7 +62,7 @@ def get_dfs():
         dfs[index]['cat']['df'] = pandas.read_csv(folder)
         dfs[index]['cat']['kind'] = dfs[index]['cat']['df']['kind'].iloc[0]
         dfs[index]['cat']['df'] = dfs[index]['cat']['df'].drop('kind',1)
-        dfs[index]['cat']['df']['product'] = dfs[index]['cat']['df']['Weighted_wer'] * dfs[index]['cat']['df']['ref_words']
+        dfs[index]['cat']['df']['product'] = dfs[index]['cat']['df']['WER'] * dfs[index]['cat']['df']['ref_words']
         dfs[index]['cat']['wer'] = dfs[index]['cat']['df']['product'].sum() / dfs[index]['cat']['df']['ref_words'].sum()
         dfs[index]['cat']['df'] = dfs[index]['cat']['df'].drop('product',1)
         print(dfs)
@@ -83,7 +83,7 @@ def get_dfs():
         dfs[index]['spk']['kind'] = dfs[index]['spk']['df']['kind'].iloc[0]
         dfs[index]['spk']['df'] = dfs[index]['spk']['df'].drop('kind', 1)
 
-        dfs[index]['spk']['df']['product'] = dfs[index]['spk']['df']['Weighted_wer'] * dfs[index]['spk']['df'][
+        dfs[index]['spk']['df']['product'] = dfs[index]['spk']['df']['WER'] * dfs[index]['spk']['df'][
             'ref_words']
         dfs[index]['spk']['wer'] = dfs[index]['spk']['df']['product'].sum() / dfs[index]['spk']['df']['ref_words'].sum()
         dfs[index]['spk']['df'] = dfs[index]['spk']['df'].drop('product', 1)
