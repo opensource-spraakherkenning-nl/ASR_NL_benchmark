@@ -78,7 +78,7 @@ def calculate_wer(df):
     wer = float(df['product'].sum()) / float(df['ref_words'].sum())
     return df, wer
 
-def calculate_wer_per_cat(df,category='category', id='', kind=False):
+def calculate_wer_per_cat(df,category='category', id='', kind=''):
     """ Calculates the WER for every unique value for a certain column
     Args:
         df: the pandas dataframe
@@ -98,11 +98,11 @@ def calculate_wer_per_cat(df,category='category', id='', kind=False):
     1   banaan          2  0.40  False
 
     """
-    df_out = df.groupby('category', as_index=False).agg({'ref_words': 'sum', 'product': 'sum'})
+    df_out = df.groupby(category, as_index=False).agg({'ref_words': 'sum', 'product': 'sum'})
     df_out['WER'] = (df_out['product'] / df_out['ref_words']).round(2)
     df_out = df_out.drop('product', 1)
     df_out['kind'] = kind
-    df_out.to_csv(os.path.join(os.path.sep, 'input', 'results', f'results_{category}_{id}.csv'), index=False)
+    df_out.to_csv(os.path.join(os.path.sep, 'input', 'results', f'results_{category}_{id}_{kind}.csv'), index=False)
     return df_out
 
 def process_results_dtl_only(path_parts=('input','results'), id='', kind= False):
@@ -210,14 +210,19 @@ def process_input(hypfile_arg, reffile_arg):
 
 
 class Pipeline():
-    def __init__(self, hypfile_input_path, hypextension, reffile_input_path, refextension):
+    def __init__(self, hypfile_input_path, hypextension, reffile_input_path, refextension, kind):
         self.progress = 0
         self.failed = 0
-        self.hypfile_input_path = hypfile_input_path
-        self.reffile_input_path = reffile_input_path
+        self.hypfile_input_path = os.path.join(os.path.sep,'input',hypfile_input_path)
+        self.reffile_input_path = os.path.join(os.path.sep,'input',reffile_input_path)
         self.hypextension = hypextension
         self.refextension = refextension
+        self.kind = kind
         self.logging = set_logging(logpath=os.path.join(os.path.sep,'input',f'{date.today()}_logging.log'))
+        self.logging.info(f"hypfile path from terminal: {hypfile_input_path}")
+        self.logging.info(f"reffile path from terminal: {reffile_input_path}")
+        self.logging.info(f"Pipeline class' hypfile path: {self.hypfile_input_path}")
+        self.logging.info(f"Pipeline class' reffile path: {self.reffile_input_path}")
 
     def main(self):
         hyp_list, ref_list = process_input(self.hypfile_input_path, self.reffile_input_path)
@@ -238,7 +243,7 @@ class Pipeline():
                 done +=1
                 self.progress = done/total
                 self.failed += 1
-        process_results(path_parts=('input','results'), kind=False)
+        process_results(path_parts=('input','results'), kind=self.kind)
 
 
 

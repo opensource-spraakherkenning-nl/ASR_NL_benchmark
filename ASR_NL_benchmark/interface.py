@@ -19,8 +19,9 @@ def upload_page():
     if request.method == 'POST':
         hyp = os.path.join(os.path.sep,'input',request.form.get('hyp'))
         ref = os.path.join(os.path.sep,'input',request.form.get('ref'))
+        kind = request.form.get('kind')
         global benchmarking
-        benchmarking = pipeline.Pipeline(hyp, 'ctm', ref, 'stm')
+        benchmarking = pipeline.Pipeline(hyp, 'ctm', ref, 'stm', kind)
         Thread(target=benchmarking.main).start()
         return redirect(f'/progress?ref={ref}&hyp={hyp}')
     return render_template('select_files.html')
@@ -62,12 +63,12 @@ def get_dfs():
         dfs[index]['cat']['df'] = pandas.read_csv(folder)
         dfs[index]['cat']['kind'] = dfs[index]['cat']['df']['kind'].iloc[0]
         dfs[index]['cat']['df'] = dfs[index]['cat']['df'].drop('kind',1)
-        dfs[index]['cat']['df']['product'] = dfs[index]['cat']['df']['Weighted_wer'] * dfs[index]['cat']['df']['ref_words']
+        dfs[index]['cat']['df']['product'] = dfs[index]['cat']['df']['WER'] * dfs[index]['cat']['df']['ref_words']
         dfs[index]['cat']['wer'] = dfs[index]['cat']['df']['product'].sum() / dfs[index]['cat']['df']['ref_words'].sum()
         dfs[index]['cat']['df'] = dfs[index]['cat']['df'].drop('product',1)
         print(dfs)
 
-    speaker_folders = [f.path for f in os.scandir(os.path.join(os.path.sep,'input','')) if
+    speaker_folders = [f.path for f in os.scandir(os.path.join(os.path.sep,'input','results','')) if
                        f.is_file() and f.name.startswith('results_speaker') and f.name.endswith('.csv')]
 
     for folder in speaker_folders:
@@ -77,16 +78,16 @@ def get_dfs():
         except KeyError:
             dfs[index] = {}
             dfs[index]['spk']= {}
-        dfs[index]['spk'] = {}
         dfs[index]['spk']['agregation'] = 'Per spreker'
         dfs[index]['spk']['df'] = pandas.read_csv(folder)
         dfs[index]['spk']['kind'] = dfs[index]['spk']['df']['kind'].iloc[0]
         dfs[index]['spk']['df'] = dfs[index]['spk']['df'].drop('kind', 1)
 
-        dfs[index]['spk']['df']['product'] = dfs[index]['spk']['df']['Weighted_wer'] * dfs[index]['spk']['df'][
+        dfs[index]['spk']['df']['product'] = dfs[index]['spk']['df']['WER'] * dfs[index]['spk']['df'][
             'ref_words']
         dfs[index]['spk']['wer'] = dfs[index]['spk']['df']['product'].sum() / dfs[index]['spk']['df']['ref_words'].sum()
         dfs[index]['spk']['df'] = dfs[index]['spk']['df'].drop('product', 1)
+        print(dfs)
 
     return dfs
 
