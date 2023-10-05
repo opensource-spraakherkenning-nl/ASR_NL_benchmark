@@ -78,7 +78,7 @@ def calculate_wer(df):
     wer = float(df['product'].sum()) / float(df['ref_words'].sum())
     return df, wer
 
-def calculate_wer_per_cat(df,category='category', id='', kind=False):
+def calculate_wer_per_cat(df,category='category', id='', kind=''):
     """ Calculates the WER for every unique value for a certain column
     Args:
         df: the pandas dataframe
@@ -102,7 +102,7 @@ def calculate_wer_per_cat(df,category='category', id='', kind=False):
     df_out['WER'] = (df_out['product'] / df_out['ref_words']).round(2)
     df_out = df_out.drop('product', 1)
     df_out['kind'] = kind
-    df_out.to_csv(os.path.join(os.path.sep, 'input', 'results', f'results_{category}_{id}.csv'), index=False)
+    df_out.to_csv(os.path.join(os.path.sep, 'input', 'results', f'results_{category}_{id}_{kind}.csv'), index=False)
     return df_out
 
 def process_results_dtl_only(path_parts=('input','results'), id='', kind= False):
