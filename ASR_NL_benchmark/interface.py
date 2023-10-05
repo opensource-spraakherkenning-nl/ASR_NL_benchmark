@@ -68,7 +68,7 @@ def get_dfs():
         dfs[index]['cat']['df'] = dfs[index]['cat']['df'].drop('product',1)
         print(dfs)
 
-    speaker_folders = [f.path for f in os.scandir(os.path.join(os.path.sep,'input','')) if
+    speaker_folders = [f.path for f in os.scandir(os.path.join(os.path.sep,'input','results','')) if
                        f.is_file() and f.name.startswith('results_speaker') and f.name.endswith('.csv')]
 
     for folder in speaker_folders:
