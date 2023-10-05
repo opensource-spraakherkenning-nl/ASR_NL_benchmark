@@ -78,7 +78,6 @@ def get_dfs():
         except KeyError:
             dfs[index] = {}
             dfs[index]['spk']= {}
-        dfs[index]['spk'] = {}
         dfs[index]['spk']['agregation'] = 'Per spreker'
         dfs[index]['spk']['df'] = pandas.read_csv(folder)
         dfs[index]['spk']['kind'] = dfs[index]['spk']['df']['kind'].iloc[0]
@@ -88,6 +87,7 @@ def get_dfs():
             'ref_words']
         dfs[index]['spk']['wer'] = dfs[index]['spk']['df']['product'].sum() / dfs[index]['spk']['df']['ref_words'].sum()
         dfs[index]['spk']['df'] = dfs[index]['spk']['df'].drop('product', 1)
+        print(dfs)
 
     return dfs
 
