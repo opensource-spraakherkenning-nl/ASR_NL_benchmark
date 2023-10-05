@@ -19,7 +19,7 @@ def upload_page():
     if request.method == 'POST':
         hyp = os.path.join(os.path.sep,'input',request.form.get('hyp'))
         ref = os.path.join(os.path.sep,'input',request.form.get('ref'))
-        kind = os.path.join(os.path.sep,'input',request.form.get('kind'))
+        kind = request.form.get('kind')
         global benchmarking
         benchmarking = pipeline.Pipeline(hyp, 'ctm', ref, 'stm', kind)
         Thread(target=benchmarking.main).start()
