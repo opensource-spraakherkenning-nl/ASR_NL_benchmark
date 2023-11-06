@@ -44,7 +44,7 @@ def replace_numbers_and_symbols(text):
     >>> replace_numbers_and_symbols('12,3%')
     'twaalf komma drie procent'
     """
-    removed_punct = string.punctuation.replace("'", '').replace("-", '')
+    removed_punct = string.punctuation.replace("'", '')
     text_without_symbols = replace_symbols(text)
     clean_text = replace_numbers(text_without_symbols)
     clean_text = clean_text.translate(str.maketrans('', '', removed_punct))
