@@ -26,7 +26,7 @@ def set_logging(logpath):
     return logging
 
 
-def run_pipeline(hypfile, reffile):
+def run_pipeline(hypfile, reffile, skip_ref_norm, skip_hyp_norm):
     """ Validates and Normalizes the hyp and ref file and runs them trough sclite
     Args:
         hypfile: the hypothesis file
@@ -37,9 +37,11 @@ def run_pipeline(hypfile, reffile):
     reffile.validate(great_expectations_validation)
 
     # Normalize
-    reffile.clean_text(replace_numbers_and_symbols)
+    if not skip_ref_norm:
+        reffile.clean_text(replace_numbers_and_symbols)
     reffile.export(os.path.join(os.path.sep,'input',f'{reffile.name}_normalized.{reffile.extension}'))
-    hypfile.clean_text(replace_numbers_and_symbols)
+    if not skip_hyp_norm:
+        hypfile.clean_text(replace_numbers_and_symbols)
     hypfile.export(os.path.join(os.path.sep,'input',f'{hypfile.name}_normalized.{hypfile.extension}'))
 
     #Create results folder if not exists:
@@ -210,7 +212,7 @@ def process_input(hypfile_arg, reffile_arg):
 
 
 class Pipeline():
-    def __init__(self, hypfile_input_path, hypextension, reffile_input_path, refextension, kind):
+    def __init__(self, hypfile_input_path, hypextension, reffile_input_path, refextension, kind, skip_ref_norm, skip_hyp_norm):
         self.progress = 0
         self.failed = 0
         self.hypfile_input_path = os.path.join(os.path.sep,'input',hypfile_input_path)
@@ -218,11 +220,15 @@ class Pipeline():
         self.hypextension = hypextension
         self.refextension = refextension
         self.kind = kind
+        self.skip_ref_norm = skip_ref_norm
+        self.skip_hyp_norm = skip_hyp_norm
         self.logging = set_logging(logpath=os.path.join(os.path.sep,'input',f'{date.today()}_logging.log'))
         self.logging.info(f"hypfile path from terminal: {hypfile_input_path}")
         self.logging.info(f"reffile path from terminal: {reffile_input_path}")
         self.logging.info(f"Pipeline class' hypfile path: {self.hypfile_input_path}")
         self.logging.info(f"Pipeline class' reffile path: {self.reffile_input_path}")
+        self.logging.info(f"Skip reffile normalization: {self.skip_ref_norm}")
+        self.logging.info(f"Skip hypfile normalization: {self.skip_hyp_norm}")
 
     def main(self):
         hyp_list, ref_list = process_input(self.hypfile_input_path, self.reffile_input_path)
@@ -235,7 +241,7 @@ class Pipeline():
                 # Parse input
                 reffile = STM(reffile_path, self.refextension)
                 hypfile = CTM(hypfile_path, self.hypextension)
-                run_pipeline(hypfile, reffile)
+                run_pipeline(hypfile, reffile, self.skip_ref_norm, self.skip_hyp_norm)
                 done += 1
                 self.progress = done/total
             except:
