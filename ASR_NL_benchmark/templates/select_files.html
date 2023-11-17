@@ -21,7 +21,7 @@
 
 
   <div class="container pt-3 m-3" width="80%">
-  <h1> Select Hypothese and Reference files or folders </h1>
+  <h1> Select Hypothesis and Reference files or folders </h1>
   </div>
   <div class="container pt-3 m-3" width="80%">
   <div class="form-group">
@@ -30,10 +30,12 @@
           <input type="text" class="form-control" id="kind" name="kind" placeholder="Name of speech recognizer">
           <label>Path to hypothesis file or folder</label>
           <input type="text" class="form-control" id="hyp" name="hyp" placeholder="Hyp File or folder">
-          <input type="checkbox" class="form-control" id="skip-hyp-norm"> Skip the normalization step for the hyp file(s)
+          <label for="skip-hyp-norm">Skip the normalization step for the hypothesis file(s)</label>
+          <input type="checkbox" class="form-control" id="skip-hyp-norm"> 
           <label>Path to reference file or folder</label>
           <input type="text" class="form-control" id="ref" name="ref" placeholder="Ref File or folder">
-          <input type="checkbox" class="form-control" id="skip-ref-norm"> Skip the normalization step for the ref file(s)
+          <label for="skip-ref-norm">Skip the normalization step for the reference file(s)</label>
+          <input type="checkbox" class="form-control" id="skip-ref-norm">
           <button type="submit" class="btn btn-primary" >Submit</button>
       </form>
   </div>
