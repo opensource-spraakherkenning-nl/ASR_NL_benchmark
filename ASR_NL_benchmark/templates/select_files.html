@@ -30,8 +30,13 @@
           <input type="text" class="form-control" id="kind" name="kind" placeholder="Name of speech recognizer">
           <label>Path to hypothesis file or folder</label>
           <input type="text" class="form-control" id="hyp" name="hyp" placeholder="Hyp File or folder">
+          <input type="checkbox" id="skip-hyp-norm">
+          <p>Skip the normalization step for the hyp file(s)</p>
           <label>Path to reference file or folder</label>
-          <input type="text" class="form-control" id="ref" name="ref" placeholder="Ref File or folder"><button type="submit" class="btn btn-primary" >Submit</button>
+          <input type="text" class="form-control" id="ref" name="ref" placeholder="Ref File or folder">
+          <input type="checkbox" id="skip-ref-norm">
+          <p>Skip the normalization step for the ref file(s)</p>
+          <button type="submit" class="btn btn-primary" >Submit</button>
       </form>
   </div>
   </div>
