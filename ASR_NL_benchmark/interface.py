@@ -22,8 +22,6 @@ def upload_page():
         kind = request.form.get('kind')
         skip_ref_norm = request.form.get('skip-ref-norm')
         skip_hyp_norm = request.form.get('skip-hyp-norm')
-        print(skip_hyp_norm)
-        print(skip_ref_norm)
         global benchmarking
         benchmarking = pipeline.Pipeline(hyp, 'ctm', ref, 'stm', kind, skip_ref_norm, skip_hyp_norm)
         Thread(target=benchmarking.main).start()
