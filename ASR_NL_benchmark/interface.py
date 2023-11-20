@@ -20,8 +20,8 @@ def upload_page():
         hyp = os.path.join(os.path.sep,'input',request.form.get('hyp'))
         ref = os.path.join(os.path.sep,'input',request.form.get('ref'))
         kind = request.form.get('kind')
-        skip_ref_norm = request.form.get('skip_ref_norm')
-        skip_hyp_norm = request.form.get('skip_hyp_norm')
+        skip_ref_norm = request.form.get('skip-ref-norm')
+        skip_hyp_norm = request.form.get('skip-hyp-norm')
         print(skip_hyp_norm)
         print(skip_ref_norm)
         global benchmarking
