@@ -24,7 +24,7 @@ Please check the guidelines for the reference file in the section below.
 
 In order to run the benchmarking tool over a (set of) local hyp and ref file(s) we need docker to mount the local directory where the input files are located. The output files of the benchmarking tool will appear in the same folder. 
 
-The following line runs the benchmarking tool over a local hyp and ref file. Use the absolute file path as the value for the variables `SOURCE`. For `HYPFILENAME` use the filename of the hypfile and for `REFFILENAME` the name of the reffile. 
+The following line runs the benchmarking tool over a local hyp and ref file. Use the absolute file path as the value for the `SOURCE` variable. For `HYPFILENAME` use the filename of the hypfile and for `REFFILENAME` the name of the reffile. 
 
 `HYPFILENAME` and `REFFILENAME` can also be the names of the folders containing the *hypfiles* and *reffiles* respectively. **Make sure** to create a folder named `results` in the `SOURCE` folder before running the command below:
 
@@ -35,16 +35,16 @@ The results (.dtl, .prf, .spk, and .csv format) can be found inside the `results
 
 ### How to: Use the Interface
 
-In order to open a User Interface, run a command similar to the one above but now with the optional argument `-interface` set to `True`:
+In order to open a User Interface, run a command similar to the one above but now with the optional argument `-interactive`:
 
-- <code> docker run -it  --mount type=bind,source=SOURCE,target=/input  asrnlbenchmark/asr-nl-benchmark:latest python ASR_NL_benchmark -interactive True </code>
+- <code> docker run -it  --mount type=bind,source=SOURCE,target=/input  asrnlbenchmark/asr-nl-benchmark:latest python ASR_NL_benchmark -interactive </code>
 
 Use a web browser to access the UI by navigating to "http://localhost:5000"
 
-Within the tab Select folder, enter the path to the hypotheses and reference files:
+Within the tab "Select folder", enter the path to the hypothesis and reference files:
 
-- Enter the path of the hyp or the path to a folder containing a set of hyp files: (e.g. "ref_folder" or "ref_file.stm")
-- Enter the path of the ref file or the path to a folder containing a set of ref files: (e.g. "hyp_folder" or "hyp_file.stm")
+- Enter the path of the hyp file or the path to a folder containing a set of hyp files: (e.g. "hyp_folder" or "hyp_file.stm")
+- Enter the path of the ref file or the path to a folder containing a set of ref files: (e.g. "ref_folder" or "ref_file.stm")
 - click "Submit"
 
 A progress bar will appear. As soon as the benchmarking is ready, you will be forwarded to the results. The results (.dtl, .prf, .spk, and .csv format) can be found inside a folder named `results` which can be found on the local `SOURCE` location (see above).
@@ -62,14 +62,13 @@ The final results are saved in .csv format inside a folder named `results` store
 - .csv files - Overall results of the benchmarking as shown in the interface
 
 ## Extra arguments
-There are extra arguments that you can add to the command line:
+There are extra arguments that you can add to the command line (**NOT** the interface):
 - `-skip_hyp_normalization`: Skips the normalization step for the hypothesis file(s) (STILL APPLIES VARIATIONS)
 - `-skip_ref_normalization`: Skips the normalization step for the reference file(s) (STILL APPLIES VARIATIONS)
-- `-sc_args`: With this argument, you can add extra sclite-specific flags. For more information, check the [documentation of sclite](https://github.com/usnistgov/SCTK/blob/master/doc/sclite.htm) (to view it properly, we suggest locally downloading the entire `doc` folder of the SCTK repository).
 
 ## More about the pipeline
 ### Normalization
-Manual transcripts (used as reference files) sometimes contain abbreviations (e.g. "'n" instead of "een"), symbols (e.g. "&" instead of "en") and numbers ("4" instead of "vier"). The reference files often contain the written form of the words instead. Since we don't want to penalize the speech-to-text tooling or algorithm for such differences, we normalize both the reference and hypothesis files.
+Manual transcripts (used as reference files) sometimes contain abbreviations (e.g. `'n` instead of `een`), symbols (e.g. `&` instead of `en`) and numbers (`4` instead of `vier`). The reference files often contain the written form of the words instead. Since we don't want to penalize the speech-to-text tooling or algorithm for such differences, we normalize both the reference and hypothesis files.
 
 Normalization replacements:
 
@@ -107,13 +106,13 @@ example:
 Without subcategories:
 - program_1.stm
 - program_1.ctm
-- programe_2.stm
+- program_2.stm
 - program_2.ctm
 
 With subcategories (sports v.s. news):
-- programe_1.stm
+- program_1.stm
 - program_1-sports.ctm
-- programe_2.stm
+- program_2.stm
 - program_2-news.ctm
 
 
@@ -122,15 +121,15 @@ The reference file is used as the ground truth. To get the best results, the ref
 
 - The reference file should be a Segment Time Mark file (STM), see description below.
 - Words should be written according to the modern Dutch spelling
-- No abbreviations (e.g. use: "bijvoorbeeld" instead of: "bv." or "bijv. , use: "het" instead of "'t")
-- No symbols (use: "procent" instead of:  "%")
-- No numbers (write out all numbers: "drie" instead of "3")
+- No abbreviations (e.g. use `bijvoorbeeld` instead of `bv.` or `bijv.` , use `het` instead of `'t`)
+- No symbols (use: `procent` instead of `%`)
+- No numbers (write out all numbers: `drie` instead of `3`)
 - utf-8 encoded
 
 In order to create those reference files, we suggest to use a transcription tool like [transcriber](http://trans.sourceforge.net/en/usermanUS.php).
 
 #### Segment Time Mark (STM)
-The Segment Time Mark files, to be used as reference files, consist of a connotation of time marked text segment records. Those segments are separated by a new line and follow the format:
+The Segment Time Mark file, to be used as reference file, consists of a connotation of time marked text segment records. Those segments are separated by a new line and follow the format:
 
     File_id Channel Speaker_id Begin_Time End_Time <Label> Transcript
   
@@ -139,18 +138,18 @@ To comment out a line, start the line with ';;'
 ##### Example STM
     ;; Some information you want to comment out like a description  
     ;; More information you want to include and comment out  
-    ;; like the name of the transcriber, the version or explanation of labels   
+    ;; like the name of the transcriber, the version or explanation of labels, etc.
     Your_favorite_tv_show_2021_S1_E1 Speaker_01_Female_Native A 0.000 1.527 <o, f1, female> The first line  
     Your_favorite_tv_show_2021_S1_E1 Speaker_01_Female_Native A 1.530 2.127 <o, f1, male> The second text segment  
 
 
 ### Hypothesis file
-To get the best results the hypothesis file (i.e. the output of a speech recognizer) should meet the following guidelines:
-- The hypothesis file should be Time Marked Conversations files (CTM), see the description below.
+To get the best results, the hypothesis file (i.e. the output of a speech recognizer) should meet the following guidelines:
+- The hypothesis file should be a Time Marked Conversations file (CTM), see the description below.
 - utf-8 encoded
 
 #### CTM Format
-The Time Marked Conversation files, to be used as hypothesis files, consist of a connotation of time-marked word records. Those records are separated by a new line and follow the format:
+The Time Marked Conversation file, to be used as hypothesis file, consists of a connotation of time-marked word records. Those records are separated by a new line and follow the format:
 
     File_id Channel Begin_time Duration Word Confidence
 
@@ -158,7 +157,7 @@ To comment out a line, start the line with ';;'
 
 ##### Example CTM
 
-    ;; Some infomration you want to comment out like a description  
+    ;; Some information you want to comment out like a description  
     ;; More information you want to include and comment out  
     Your_favorite_tv_show_2021_S1_E1 A 0.000 0.482 The 0.95  
     Your_favorite_tv_show_2021_S1_E1 A 0.496 0.281 first 0.98  

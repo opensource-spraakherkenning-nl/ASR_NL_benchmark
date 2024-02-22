@@ -27,9 +27,6 @@ if __name__ == "__main__":
     parser.add_argument('-skip_hyp_normalization', 
                         action = 'store_true',
                         help = 'skip the normalization step for the hypothesis file')
-    parser.add_argument('-sc_args', nargs='*',
-                        default=[],
-                        help='extra sclite arguments you want to use (without the -)')
 
     args = parser.parse_args()
 
