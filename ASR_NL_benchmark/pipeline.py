@@ -47,18 +47,20 @@ def run_pipeline(hypfile, reffile, skip_ref_norm, skip_hyp_norm):
     #Create results folder if not exists:
     if not os.path.exists(os.path.join(os.path.sep,'input','results')):
         os.makedirs(os.path.join(os.path.sep,'input','results'))
+    
+    # sclite command to be logged and executed
+    command = f"sclite -D -h {hypfile.variation_path} {hypfile.extension} -r {reffile.variation_path} {reffile.extension} \
+        -m hyp -O {os.path.join(os.path.sep,'input','results')} -o prf dtl spk"
 
     # Run variation scripts
-    logging.info(
-        f"running: sclite -h {hypfile.normalized_path} {hypfile.extension} -r {reffile.normalized_path} {reffile.extension} -m hyp -O {os.path.join(os.path.sep,'input','results')}  -o dtl spk")
-    run = os.system(
-        f"csrfilt.sh -s -i ctm {os.path.join('ASR_NL_benchmark','variations.glm')} < {hypfile.normalized_path} > {hypfile.variation_path}")
+    # Hypothesis
+    run = os.system(f"csrfilt.sh -s -i ctm {os.path.join('ASR_NL_benchmark','variations.glm')} < {hypfile.normalized_path} > {hypfile.variation_path}")
+    # Reference
+    run = os.system(f"csrfilt.sh -s -i stm {os.path.join('ASR_NL_benchmark','variations.glm')} < {reffile.normalized_path} > {reffile.variation_path}")
 
-    # Run sclite
-    run = os.system(
-        f"csrfilt.sh -s -i stm {os.path.join('ASR_NL_benchmark','variations.glm')} < {reffile.normalized_path} > {reffile.variation_path}")
-    run = os.system(
-        f"sclite -D -h {hypfile.variation_path} {hypfile.extension} -r {reffile.variation_path} {reffile.extension} -m hyp -O {os.path.join(os.path.sep,'input','results')} -o prf dtl spk")
+    # Log & run sclite
+    logging.info("running:" + command)
+    run = os.system(command)
 
 def calculate_wer(df):
     """ Calculates the word error rate and adds the collumn 'product' to the dataframe

@@ -61,6 +61,11 @@ The final results are saved in .csv format inside a folder named `results` store
 - .spk files - Report with scoring for a speaker as returned by sclite
 - .csv files - Overall results of the benchmarking as shown in the interface
 
+## Extra arguments
+There are extra arguments that you can add to the command line:
+- `-skip_hyp_normalization`: Skips the normalization step for the hypothesis file(s) (STILL APPLIES VARIATIONS)
+- `-skip_ref_normalization`: Skips the normalization step for the reference file(s) (STILL APPLIES VARIATIONS)
+- `-sc_args`: With this argument, you can add extra sclite-specific flags. For more information, check the [documentation of sclite](https://github.com/usnistgov/SCTK/blob/master/doc/sclite.htm) (to view it properly, we suggest locally downloading the entire `doc` folder of the SCTK repository).
 
 ## More about the pipeline
 ### Normalization
