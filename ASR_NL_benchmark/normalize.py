@@ -20,6 +20,7 @@ def check_and_covert_interger(word):
             float(word)
             new_word = num2words(word, to='cardinal', lang='nl')
             new_word = new_word.replace('komma', 'punt')
+            new_word = new_word.replace('duizend', 'duizend ')
             logging.info(f'converted the number {word} to {new_word}')
             return new_word
         except:
@@ -29,6 +30,7 @@ def check_and_covert_interger(word):
         try:
             float(new_word)
             new_word = num2words(new_word, to='cardinal', lang='nl')
+            new_word = new_word.replace('duizend', 'duizend ')
             logging.info(f'converted number {word} to {new_word}')
             return new_word
         except:
@@ -44,9 +46,10 @@ def replace_numbers_and_symbols(text):
     >>> replace_numbers_and_symbols('12,3%')
     'twaalf komma drie procent'
     """
+    removed_punct = string.punctuation.replace("'", '').replace('-', '')
     text_without_symbols = replace_symbols(text)
     clean_text = replace_numbers(text_without_symbols)
-    clean_text = clean_text.translate(str.maketrans('', '', string.punctuation))
+    clean_text = clean_text.translate(str.maketrans('', '', removed_punct))
     return clean_text
 
 def replace_numbers(text):
@@ -65,6 +68,7 @@ def replace_numbers(text):
         if word.isdigit():
             number_of_numbers += 1
             text_list[position] = num2words(word, to='cardinal', lang='nl')
+            text_list[position] = text_list[position].replace('duizend', 'duizend ')
         elif check_and_covert_interger(word):
             text_list[position] = check_and_covert_interger(word)
     text_without_numbers = " ".join(text_list)
