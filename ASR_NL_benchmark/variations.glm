@@ -87,3 +87,15 @@ tewerk => te werk / [ ] __ [ ]
 [marktonderzoekbureau] => [{ marktonderzoekbureau / marktonderzoeksbureau }] / [ ] __ [ ]
 [Noordwestkust] => [{ Noordwestkust / Noord-Westkust }] / [ ] __ [ ]
 [carnavalvierders] => [{ carnavalvierders / carnavalsvierders }] / [ ] __ [ ]
+
+;; Whisper evaluation on N-Best
+;; BN-NL
+ie => hij / [ ] __ [ ]
+da's => dat is / [ ] __ [ ]
+[BNR-nieuwsradio] => [{ BNR-nieuwsradio / BNR nieuwsradio }] / [ ] __ [ ]
+[Moszkowicz] => [{ Moszkowicz / Moskovic / Moskowitz }] / [ ] __ [ ]
+[Kooi] => [{ Kooi / Kooij }] / [ ] __ [ ]
+[Araújo] => [{ Araújo / Araujo }] / [ ] __ [ ]
+[Bagdad] => [{ Bagdad / Baghdad }] / [ ] __ [ ]
+[Holleeder] => [{ Holleeder / Holleder }] / [ ] __ [ ]
+[Imac] => [{ Imac / Imaç }] / [ ] __ [ ]

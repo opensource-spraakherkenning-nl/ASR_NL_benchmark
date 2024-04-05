@@ -20,8 +20,10 @@ def upload_page():
         hyp = os.path.join(os.path.sep,'input',request.form.get('hyp'))
         ref = os.path.join(os.path.sep,'input',request.form.get('ref'))
         kind = request.form.get('kind')
+        skip_ref_norm = request.form.get('skip-ref-norm')
+        skip_hyp_norm = request.form.get('skip-hyp-norm')
         global benchmarking
-        benchmarking = pipeline.Pipeline(hyp, 'ctm', ref, 'stm', kind)
+        benchmarking = pipeline.Pipeline(hyp, 'ctm', ref, 'stm', kind, skip_ref_norm, skip_hyp_norm)
         Thread(target=benchmarking.main).start()
         return redirect(f'/progress?ref={ref}&hyp={hyp}')
     return render_template('select_files.html')
