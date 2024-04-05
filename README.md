@@ -37,7 +37,7 @@ The results (.dtl, .prf, .spk, and .csv format) can be found inside the `results
 
 In order to open a User Interface, run a command similar to the one above but now with the optional argument `-interactive`:
 
-- <code> docker run -it  --mount type=bind,source=SOURCE,target=/input  asrnlbenchmark/asr-nl-benchmark:latest python ASR_NL_benchmark -interactive </code>
+- <code> docker run -it -p 5000:5000 --mount type=bind,source=SOURCE,target=/input  asrnlbenchmark/asr-nl-benchmark:latest python ASR_NL_benchmark -interactive </code>
 
 Use a web browser to access the UI by navigating to "http://localhost:5000"
 
